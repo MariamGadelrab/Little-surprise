@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Puzzle 🧩</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="puzzle-style.css">
+</head>
+<body>
+    <!-- Background decorations -->
+    <div class="background-decorations">
+        <!-- Sparkles -->
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        
+        <!-- Hearts -->
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        
+        <!-- Confetti dots -->
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="title">Put the pieces together 🧩</h1>
+        <p class="subtitle">There's something special waiting for you</p>
+
+        <!-- Puzzle area -->
+        <div class="puzzle-container">
+            <div id="puzzle-grid" class="puzzle-grid"></div>
+        </div>
+
+        <!-- Success message (hidden initially) -->
+        <div class="success-message hidden">
+            You unlocked a surprise ✨
+        </div>
+
+        <!-- Continue button (hidden initially) -->
+        <button class="continue-button hidden">
+            Continue 💌
+        </button>
+    </div>
+
+    <!-- Confetti canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="puzzle-script.js"></script>
+</body>
+</html>

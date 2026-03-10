@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Shossely! 🎂</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background decorations -->
+    <div class="background-decorations">
+        <!-- Sparkles -->
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        
+        <!-- Hearts -->
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        
+        <!-- Confetti dots -->
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+    </div>
+
+    <!-- Balloons -->
+    <div class="balloons-container">
+        <div class="balloon" style="left: 8%; top: 15%;"></div>
+        <div class="balloon" style="left: 3%; top: 45%;"></div>
+        <div class="balloon" style="right: 8%; top: 20%;"></div>
+        <div class="balloon" style="right: 3%; top: 50%;"></div>
+        <div class="balloon" style="left: 5%; top: 75%;"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="title">Happy Birthday Shossely</h1>
+        <p class="subtitle">Make a wish and blow the candles</p>
+
+        <!-- Birthday cake -->
+        <div class="cake-container">
+            <!-- Candles -->
+            <div class="candles">
+                <div class="candle" data-candle="1">
+                    <div class="flame"></div>
+                    <div class="wick"></div>
+                </div>
+                <div class="candle" data-candle="2">
+                    <div class="flame"></div>
+                    <div class="wick"></div>
+                </div>
+                <div class="candle" data-candle="3">
+                    <div class="flame"></div>
+                    <div class="wick"></div>
+                </div>
+            </div>
+            
+            <!-- Cake -->
+            <div class="cake">
+                <!-- Top layer -->
+                <div class="cake-layer layer-top">
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                </div>
+                
+                <!-- Middle layer -->
+                <div class="cake-layer layer-middle">
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                </div>
+                
+                <!-- Bottom layer -->
+                <div class="cake-layer layer-bottom">
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="drip"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                    <div class="sprinkle"></div>
+                </div>
+            </div>
+        </div>
+
+        <p class="helper-text">Tap each candle to blow it out</p>
+
+        <!-- Success message (hidden initially) -->
+        <div class="success-message hidden">
+            Your wish has been saved ✨
+        </div>
+
+        <!-- Surprise button (hidden initially) -->
+        <button class="surprise-button hidden">
+            Open your birthday surprise 🎁
+        </button>
+    </div>
+
+    <!-- Confetti container -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>

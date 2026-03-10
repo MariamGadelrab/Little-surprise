@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Little Plans 💗</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="plans-style.css">
+</head>
+<body>
+    <!-- Background decorations -->
+    <div class="background-decorations">
+        <!-- Stars/Sparkles -->
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        
+        <!-- Hearts -->
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        
+        <!-- Balloons -->
+        <div class="balloon balloon-pink"></div>
+        <div class="balloon balloon-yellow"></div>
+        <div class="balloon balloon-blue"></div>
+        
+        <!-- Confetti dots -->
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="title">Our Little Plans 💗</h1>
+        <p class="subtitle">Things we still want to do together</p>
+
+        <!-- Sticky notes board -->
+        <div class="sticky-board">
+            <!-- Note 1 - Completed by default -->
+            <div class="sticky-note completed" style="--rotation: -2deg;" data-id="0">
+                <div class="checkbox checked">✓</div>
+                <p>Went to the cinema together for the first time 🎬</p>
+            </div>
+
+            <!-- Note 2 -->
+            <div class="sticky-note" style="--rotation: 1deg; --bg-color: #FFF3B0;" data-id="1">
+                <div class="checkbox">☐</div>
+                <p>Weekly taste tests together 🍩</p>
+            </div>
+
+            <!-- Note 3 -->
+            <div class="sticky-note" style="--rotation: -1deg; --bg-color: #FFC2D1;" data-id="2">
+                <div class="checkbox">☐</div>
+                <p>Write each other a letter every month 💌</p>
+            </div>
+
+            <!-- Note 4 -->
+            <div class="sticky-note" style="--rotation: 2deg; --bg-color: #CDB4DB;" data-id="3">
+                <div class="checkbox">☐</div>
+                <p>Have a playdough date 🎨</p>
+            </div>
+
+            <!-- Note 5 -->
+            <div class="sticky-note" style="--rotation: -1.5deg; --bg-color: #BDE0FE;" data-id="4">
+                <div class="checkbox">☐</div>
+                <p>Decorate the Komodino together 🎨</p>
+            </div>
+
+            <!-- Note 6 -->
+            <div class="sticky-note" style="--rotation: 1.5deg; --bg-color: #FFF3B0;" data-id="5">
+                <div class="checkbox">☐</div>
+                <p>Go to a rug-making workshop together 🧶</p>
+            </div>
+
+            <!-- Note 7 -->
+            <div class="sticky-note" style="--rotation: -2deg; --bg-color: #FFC2D1;" data-id="6">
+                <div class="checkbox">☐</div>
+                <p>Travel somewhere together ✈️</p>
+            </div>
+
+            <!-- Note 8 -->
+            <div class="sticky-note" style="--rotation: 1deg; --bg-color: #CDB4DB;" data-id="7">
+                <div class="checkbox">☐</div>
+                <p>Take chaotic photos together 📸</p>
+            </div>
+
+            <!-- Note 9 -->
+            <div class="sticky-note" style="--rotation: -1deg; --bg-color: #BDE0FE;" data-id="8">
+                <div class="checkbox">☐</div>
+                <p>Keep adding to this list forever 💗</p>
+            </div>
+        </div>
+
+        <!-- Add new plan section -->
+        <div class="add-plan-section">
+            <button class="add-plan-btn">Add a new plan ✨</button>
+            <div class="input-container hidden">
+                <input type="text" class="plan-input" placeholder="What would you like to do together?" maxlength="100">
+                <button class="add-btn">Add</button>
+                <button class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Back button -->
+        <button class="back-button">Back to surprises 🎁</button>
+    </div>
+
+    <script src="plans-script.js"></script>
+</body>
+</html>

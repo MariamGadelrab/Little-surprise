@@ -1,0 +1,403 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #FFE5EC 0%, #FFC2D1 50%, #CDB4DB 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+    animation: fadeInBackground 0.8s ease-out;
+}
+
+@keyframes fadeInBackground {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Background decorations */
+.background-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+    animation: fadeIn 1s ease-out 0.3s backwards;
+}
+
+/* Sparkles */
+.sparkle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #FFF3B0;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255, 243, 176, 0.7);
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+.sparkle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 20%; left: 80%; animation-delay: 0.5s; }
+.sparkle:nth-child(3) { top: 70%; left: 15%; animation-delay: 1s; }
+.sparkle:nth-child(4) { top: 80%; left: 85%; animation-delay: 1.5s; }
+.sparkle:nth-child(5) { top: 40%; left: 10%; animation-delay: 2s; }
+.sparkle:nth-child(6) { top: 60%; left: 90%; animation-delay: 2.5s; }
+
+@keyframes twinkle {
+    0%, 100% { 
+        opacity: 0.3; 
+        transform: scale(0.8); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2); 
+    }
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #FF8FAB;
+    transform: rotate(-45deg);
+    animation: floatHeart 5s infinite ease-in-out;
+    opacity: 0.5;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #FF8FAB;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -5px;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 5px;
+}
+
+.heart:nth-child(7) { top: 15%; left: 50%; animation-delay: 0s; }
+.heart:nth-child(8) { top: 50%; left: 5%; animation-delay: 1.5s; }
+.heart:nth-child(9) { top: 85%; left: 50%; animation-delay: 3s; }
+.heart:nth-child(10) { top: 50%; left: 95%; animation-delay: 4.5s; }
+
+@keyframes floatHeart {
+    0%, 100% { 
+        transform: rotate(-45deg) translateY(0); 
+        opacity: 0.3;
+    }
+    50% { 
+        transform: rotate(-45deg) translateY(-15px); 
+        opacity: 0.7;
+    }
+}
+
+/* Confetti dots */
+.confetti-dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    animation: floatDot 4s infinite ease-in-out;
+}
+
+.confetti-dot:nth-child(11) { top: 25%; left: 35%; background: #CDB4DB; animation-delay: 0s; }
+.confetti-dot:nth-child(12) { top: 45%; left: 70%; background: #BDE0FE; animation-delay: 1s; }
+.confetti-dot:nth-child(13) { top: 75%; left: 30%; background: #FFC2D1; animation-delay: 2s; }
+.confetti-dot:nth-child(14) { top: 35%; left: 65%; background: #FFF3B0; animation-delay: 3s; }
+
+@keyframes floatDot {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        opacity: 0.4;
+    }
+    50% { 
+        transform: translateY(-18px) scale(1.2); 
+        opacity: 0.8;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Main container */
+.container {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+}
+
+.title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #FF8FAB;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 6px rgba(255, 143, 171, 0.3);
+    animation: fadeInDown 0.8s ease-out 0.2s backwards;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #CDB4DB;
+    margin-bottom: 40px;
+    font-weight: 400;
+    animation: fadeInDown 0.8s ease-out 0.4s backwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Puzzle container */
+.puzzle-container {
+    display: inline-block;
+    margin: 20px auto;
+    animation: fadeInUp 0.8s ease-out 0.6s backwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+.puzzle-piece {
+    width: 100px;
+    height: 100px;
+    background-size: 400px 400px;
+    border-radius: 12px;
+    cursor: grab;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.puzzle-piece:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(255, 143, 171, 0.4);
+}
+
+.puzzle-piece.dragging {
+    opacity: 0.7;
+    cursor: grabbing;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(255, 143, 171, 0.6);
+    z-index: 100;
+}
+
+.puzzle-piece.drag-over {
+    transform: scale(1.05);
+    border-color: rgba(189, 224, 254, 0.9);
+    box-shadow: 0 6px 20px rgba(189, 224, 254, 0.5);
+    background-color: rgba(189, 224, 254, 0.1);
+}
+
+.puzzle-piece.correct {
+    cursor: default;
+    border-color: rgba(189, 224, 254, 0.8);
+    animation: correctPiece 0.5s ease-out;
+}
+
+@keyframes correctPiece {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Success message */
+.success-message {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #FF8FAB;
+    margin: 30px 0 20px;
+    text-shadow: 3px 3px 8px rgba(255, 143, 171, 0.3);
+    animation: popInMessage 0.6s ease-out;
+}
+
+.success-message.hidden {
+    display: none;
+}
+
+@keyframes popInMessage {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-5deg);
+    }
+    50% {
+        transform: scale(1.15) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Continue button */
+.continue-button {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding: 18px 45px;
+    background: #FF8FAB;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 143, 171, 0.5);
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    animation: slideUpButton 0.6s ease-out;
+}
+
+.continue-button:hover {
+    background: #BDE0FE;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(189, 224, 254, 0.6);
+}
+
+.continue-button:active {
+    transform: translateY(-2px);
+}
+
+.continue-button.hidden {
+    display: none;
+}
+
+@keyframes slideUpButton {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Confetti canvas */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.2rem;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .puzzle-piece {
+        width: 80px;
+        height: 80px;
+        background-size: 320px 320px;
+    }
+    
+    .puzzle-grid {
+        gap: 6px;
+        padding: 12px;
+    }
+    
+    .success-message {
+        font-size: 1.7rem;
+    }
+    
+    .continue-button {
+        font-size: 1.1rem;
+        padding: 15px 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .puzzle-piece {
+        width: 65px;
+        height: 65px;
+        background-size: 260px 260px;
+        border-radius: 10px;
+    }
+    
+    .puzzle-grid {
+        gap: 5px;
+        padding: 10px;
+    }
+    
+    .success-message {
+        font-size: 1.5rem;
+    }
+    
+    .continue-button {
+        font-size: 1rem;
+        padding: 12px 28px;
+    }
+}
