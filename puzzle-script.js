@@ -412,3 +412,4 @@ window.addEventListener('load', () => {
     initPuzzle();
 });
 
+
