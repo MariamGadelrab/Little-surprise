@@ -1,7 +1,7 @@
 // Puzzle configuration
 const GRID_SIZE = 4;
 const TOTAL_PIECES = GRID_SIZE * GRID_SIZE;
-const IMAGE_PATH = 'images/puzzle-photo.jpg';
+const IMAGE_PATH = 'Images/puzzle-photo.jpg';
 
 // Get elements
 const puzzleGrid = document.getElementById('puzzle-grid');
@@ -411,3 +411,4 @@ continueButton.addEventListener('click', () => {
 window.addEventListener('load', () => {
     initPuzzle();
 });
+
