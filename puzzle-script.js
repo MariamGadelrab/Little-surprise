@@ -8,13 +8,13 @@ const puzzleGrid = document.getElementById('puzzle-grid');
 const successMessage = document.querySelector('.success-message');
 const continueButton = document.querySelector('.continue-button');
 
-// Puzzle state
-let pieces = [];
+// Puzzle state - array representing current piece order
+let puzzleState = [];
 let correctPositions = 0;
 
 // Initialize puzzle
 function initPuzzle() {
-    // Create array of piece positions
+    // Create array of piece positions (0-15)
     const positions = [];
     for (let i = 0; i < TOTAL_PIECES; i++) {
         positions.push(i);
@@ -23,15 +23,30 @@ function initPuzzle() {
     // Shuffle positions
     shuffleArray(positions);
     
-    // Create puzzle pieces
-    for (let i = 0; i < TOTAL_PIECES; i++) {
-        const piece = createPuzzlePiece(positions[i], i);
-        pieces.push(piece);
-        puzzleGrid.appendChild(piece);
-    }
+    // Initialize puzzle state with shuffled positions
+    puzzleState = [...positions];
+    
+    // Render the puzzle
+    renderPuzzle();
     
     // Add drag and drop event listeners
     addDragAndDropListeners();
+}
+
+// Render the entire puzzle based on current state
+function renderPuzzle() {
+    // Clear the grid
+    puzzleGrid.innerHTML = '';
+    
+    // Create pieces based on current state
+    for (let gridPosition = 0; gridPosition < TOTAL_PIECES; gridPosition++) {
+        const imagePosition = puzzleState[gridPosition];
+        const piece = createPuzzlePiece(imagePosition, gridPosition);
+        puzzleGrid.appendChild(piece);
+    }
+    
+    // Check which pieces are correct after rendering
+    checkAllPieces();
 }
 
 // Create a puzzle piece
@@ -40,18 +55,56 @@ function createPuzzlePiece(imagePosition, gridPosition) {
     piece.className = 'puzzle-piece';
     piece.draggable = true;
     
-    // Calculate background position
+    // Calculate background position for the image
     const row = Math.floor(imagePosition / GRID_SIZE);
     const col = imagePosition % GRID_SIZE;
     
     piece.style.backgroundImage = `url('${IMAGE_PATH}')`;
     piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
     
-    // Store data
-    piece.dataset.correctPosition = imagePosition;
-    piece.dataset.currentPosition = gridPosition;
+    // Store data attributes
+    piece.dataset.imagePosition = imagePosition;
+    piece.dataset.gridPosition = gridPosition;
     
     return piece;
+}
+
+// Check all pieces for correctness
+function checkAllPieces() {
+    const pieces = puzzleGrid.querySelectorAll('.puzzle-piece');
+    correctPositions = 0;
+    
+    pieces.forEach((piece, index) => {
+        const imagePosition = parseInt(piece.dataset.imagePosition);
+        const gridPosition = parseInt(piece.dataset.gridPosition);
+        
+        // A piece is correct if its image position matches its grid position
+        if (imagePosition === gridPosition) {
+            if (!piece.classList.contains('correct')) {
+                piece.classList.add('correct');
+                piece.draggable = false;
+                // Add animation for newly correct pieces
+                piece.style.animation = 'correctPiece 0.5s ease-out';
+                setTimeout(() => {
+                    piece.style.animation = '';
+                }, 500);
+            }
+            correctPositions++;
+        } else {
+            // Remove correct class if piece is no longer in correct position
+            if (piece.classList.contains('correct')) {
+                piece.classList.remove('correct');
+                piece.draggable = true;
+            }
+        }
+    });
+    
+    // Check if puzzle is complete
+    if (correctPositions === TOTAL_PIECES) {
+        setTimeout(() => {
+            puzzleComplete();
+        }, 500);
+    }
 }
 
 // Shuffle array
@@ -64,64 +117,65 @@ function shuffleArray(array) {
 
 // Drag and drop functionality
 let draggedPiece = null;
-let draggedOverPiece = null;
+let draggedGridPosition = -1;
 
 function addDragAndDropListeners() {
-    pieces.forEach(piece => {
-        // HTML5 drag and drop events
-        piece.addEventListener('dragstart', handleDragStart);
-        piece.addEventListener('dragend', handleDragEnd);
-        piece.addEventListener('dragover', handleDragOver);
-        piece.addEventListener('drop', handleDrop);
-        piece.addEventListener('dragenter', handleDragEnter);
-        piece.addEventListener('dragleave', handleDragLeave);
-        
-        // Touch events for mobile
-        piece.addEventListener('touchstart', handleTouchStart, { passive: false });
-        piece.addEventListener('touchmove', handleTouchMove, { passive: false });
-        piece.addEventListener('touchend', handleTouchEnd, { passive: false });
-    });
+    // Add event listeners to the grid container for event delegation
+    puzzleGrid.addEventListener('dragstart', handleDragStart);
+    puzzleGrid.addEventListener('dragend', handleDragEnd);
+    puzzleGrid.addEventListener('dragover', handleDragOver);
+    puzzleGrid.addEventListener('drop', handleDrop);
+    puzzleGrid.addEventListener('dragenter', handleDragEnter);
+    puzzleGrid.addEventListener('dragleave', handleDragLeave);
+    
+    // Touch events for mobile
+    puzzleGrid.addEventListener('touchstart', handleTouchStart, { passive: false });
+    puzzleGrid.addEventListener('touchmove', handleTouchMove, { passive: false });
+    puzzleGrid.addEventListener('touchend', handleTouchEnd, { passive: false });
 }
 
 function handleDragStart(e) {
-    if (this.classList.contains('correct')) {
+    const piece = e.target.closest('.puzzle-piece');
+    if (!piece || piece.classList.contains('correct')) {
         e.preventDefault();
         return false;
     }
     
-    draggedPiece = this;
-    this.classList.add('dragging');
+    draggedPiece = piece;
+    draggedGridPosition = parseInt(piece.dataset.gridPosition);
+    piece.classList.add('dragging');
     
     // Set drag data
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.outerHTML);
+    e.dataTransfer.setData('text/html', piece.outerHTML);
     
     // Create drag image
-    const dragImage = this.cloneNode(true);
+    const dragImage = piece.cloneNode(true);
     dragImage.style.transform = 'rotate(5deg)';
     e.dataTransfer.setDragImage(dragImage, 50, 50);
 }
 
 function handleDragEnd(e) {
-    if (this.classList.contains('dragging')) {
-        this.classList.remove('dragging');
+    const piece = e.target.closest('.puzzle-piece');
+    if (piece && piece.classList.contains('dragging')) {
+        piece.classList.remove('dragging');
     }
     
     // Clean up any visual effects
-    pieces.forEach(piece => {
-        piece.classList.remove('drag-over');
-    });
+    const allPieces = puzzleGrid.querySelectorAll('.puzzle-piece');
+    allPieces.forEach(p => p.classList.remove('drag-over'));
     
     draggedPiece = null;
-    draggedOverPiece = null;
+    draggedGridPosition = -1;
 }
 
 function handleDragOver(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     
-    if (this !== draggedPiece && !this.classList.contains('correct')) {
-        this.classList.add('drag-over');
+    const piece = e.target.closest('.puzzle-piece');
+    if (piece && piece !== draggedPiece && !piece.classList.contains('correct')) {
+        piece.classList.add('drag-over');
     }
     
     return false;
@@ -130,17 +184,16 @@ function handleDragOver(e) {
 function handleDragEnter(e) {
     e.preventDefault();
     
-    if (this !== draggedPiece && !this.classList.contains('correct')) {
-        draggedOverPiece = this;
-        this.classList.add('drag-over');
+    const piece = e.target.closest('.puzzle-piece');
+    if (piece && piece !== draggedPiece && !piece.classList.contains('correct')) {
+        piece.classList.add('drag-over');
     }
 }
 
 function handleDragLeave(e) {
-    this.classList.remove('drag-over');
-    
-    if (this === draggedOverPiece) {
-        draggedOverPiece = null;
+    const piece = e.target.closest('.puzzle-piece');
+    if (piece) {
+        piece.classList.remove('drag-over');
     }
 }
 
@@ -148,13 +201,17 @@ function handleDrop(e) {
     e.preventDefault();
     e.stopPropagation();
     
-    this.classList.remove('drag-over');
+    const targetPiece = e.target.closest('.puzzle-piece');
+    if (targetPiece) {
+        targetPiece.classList.remove('drag-over');
+    }
     
-    if (draggedPiece && draggedPiece !== this && 
-        !this.classList.contains('correct') && 
+    if (draggedPiece && targetPiece && draggedPiece !== targetPiece && 
+        !targetPiece.classList.contains('correct') && 
         !draggedPiece.classList.contains('correct')) {
-        // Swap pieces
-        swapPieces(draggedPiece, this);
+        
+        const targetGridPosition = parseInt(targetPiece.dataset.gridPosition);
+        swapPieces(draggedGridPosition, targetGridPosition);
     }
     
     return false;
@@ -162,16 +219,19 @@ function handleDrop(e) {
 
 // Touch support for mobile devices
 let touchStartPiece = null;
+let touchStartGridPosition = -1;
 let touchOffset = { x: 0, y: 0 };
 
 function handleTouchStart(e) {
-    if (this.classList.contains('correct')) return;
+    const piece = e.target.closest('.puzzle-piece');
+    if (!piece || piece.classList.contains('correct')) return;
     
-    touchStartPiece = this;
-    this.classList.add('dragging');
+    touchStartPiece = piece;
+    touchStartGridPosition = parseInt(piece.dataset.gridPosition);
+    piece.classList.add('dragging');
     
     const touch = e.touches[0];
-    const rect = this.getBoundingClientRect();
+    const rect = piece.getBoundingClientRect();
     touchOffset.x = touch.clientX - rect.left;
     touchOffset.y = touch.clientY - rect.top;
     
@@ -195,7 +255,8 @@ function handleTouchMove(e) {
     const targetPiece = elementBelow?.closest('.puzzle-piece');
     
     // Remove previous drag-over effects
-    pieces.forEach(p => p.classList.remove('drag-over'));
+    const allPieces = puzzleGrid.querySelectorAll('.puzzle-piece');
+    allPieces.forEach(p => p.classList.remove('drag-over'));
     
     // Add drag-over effect to target
     if (targetPiece && targetPiece !== piece && !targetPiece.classList.contains('correct')) {
@@ -223,67 +284,33 @@ function handleTouchEnd(e) {
     const targetPiece = elementBelow?.closest('.puzzle-piece');
     
     // Clean up drag-over effects
-    pieces.forEach(p => p.classList.remove('drag-over'));
+    const allPieces = puzzleGrid.querySelectorAll('.puzzle-piece');
+    allPieces.forEach(p => p.classList.remove('drag-over'));
     
     // Perform swap if valid target
     if (targetPiece && targetPiece !== piece && 
         !targetPiece.classList.contains('correct') && 
         !piece.classList.contains('correct')) {
-        swapPieces(piece, targetPiece);
+        
+        const targetGridPosition = parseInt(targetPiece.dataset.gridPosition);
+        swapPieces(touchStartGridPosition, targetGridPosition);
     }
     
     touchStartPiece = null;
+    touchStartGridPosition = -1;
     e.preventDefault();
 }
 
-function swapPieces(piece1, piece2) {
-    // Get current positions
-    const pos1 = parseInt(piece1.dataset.currentPosition);
-    const pos2 = parseInt(piece2.dataset.currentPosition);
+// Swap two pieces in the puzzle state and re-render
+function swapPieces(gridPos1, gridPos2) {
+    // Swap pieces in the state array
+    [puzzleState[gridPos1], puzzleState[gridPos2]] = [puzzleState[gridPos2], puzzleState[gridPos1]];
     
-    // Swap in DOM
-    const parent = piece1.parentNode;
-    const piece1Next = piece1.nextSibling;
-    const piece2Next = piece2.nextSibling;
+    // Re-render the entire puzzle
+    renderPuzzle();
     
-    if (piece1Next === piece2) {
-        parent.insertBefore(piece2, piece1);
-    } else if (piece2Next === piece1) {
-        parent.insertBefore(piece1, piece2);
-    } else {
-        parent.insertBefore(piece1, piece2Next);
-        parent.insertBefore(piece2, piece1Next);
-    }
-    
-    // Update positions
-    piece1.dataset.currentPosition = pos2;
-    piece2.dataset.currentPosition = pos1;
-    
-    // Check if pieces are correct
-    checkPiece(piece1);
-    checkPiece(piece2);
-    
-    // Check if puzzle is complete
-    checkPuzzleComplete();
-}
-
-function checkPiece(piece) {
-    const correctPos = parseInt(piece.dataset.correctPosition);
-    const currentPos = parseInt(piece.dataset.currentPosition);
-    
-    if (correctPos === currentPos && !piece.classList.contains('correct')) {
-        piece.classList.add('correct');
-        piece.draggable = false;
-        correctPositions++;
-    }
-}
-
-function checkPuzzleComplete() {
-    if (correctPositions === TOTAL_PIECES) {
-        setTimeout(() => {
-            puzzleComplete();
-        }, 500);
-    }
+    // Re-add event listeners since we recreated the DOM elements
+    addDragAndDropListeners();
 }
 
 function puzzleComplete() {
@@ -411,5 +438,3 @@ continueButton.addEventListener('click', () => {
 window.addEventListener('load', () => {
     initPuzzle();
 });
-
-
