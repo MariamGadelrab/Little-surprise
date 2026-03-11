@@ -1,5 +1,5 @@
 // Puzzle configuration
-const GRID_SIZE = 4;
+const GRID_SIZE = 3;
 const TOTAL_PIECES = GRID_SIZE * GRID_SIZE;
 const IMAGE_PATH = 'Images/puzzle-photo.jpg';
 
@@ -55,12 +55,13 @@ function createPuzzlePiece(imagePosition, gridPosition) {
     piece.className = 'puzzle-piece';
     piece.draggable = true;
     
-    // Calculate background position for the image
+    // Calculate background position for the image (3x3 grid)
     const row = Math.floor(imagePosition / GRID_SIZE);
     const col = imagePosition % GRID_SIZE;
     
     piece.style.backgroundImage = `url('${IMAGE_PATH}')`;
-    piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+    piece.style.backgroundSize = '300% 300%';
+    piece.style.backgroundPosition = `-${col * 100}% -${row * 100}%`;
     
     // Store data attributes
     piece.dataset.imagePosition = imagePosition;
