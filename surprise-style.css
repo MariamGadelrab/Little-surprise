@@ -269,12 +269,19 @@ body {
 
 /* Gifts container */
 .gifts-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
-    flex-wrap: wrap;
+    justify-items: center;
+    max-width: 600px;
+    margin: 0 auto;
     animation: fadeInUp 0.8s ease-out 0.6s backwards;
+}
+
+/* Third gift spans both columns and centers itself */
+.gift-box:nth-child(3) {
+    grid-column: span 2;
+    justify-self: center;
 }
 
 @keyframes fadeInUp {
@@ -465,6 +472,7 @@ body {
     
     .gifts-container {
         gap: 30px;
+        max-width: 500px;
     }
     
     .gift-wrap {
@@ -539,6 +547,7 @@ body {
     
     .gifts-container {
         gap: 25px;
+        max-width: 400px;
     }
     
     .gift-wrap {
