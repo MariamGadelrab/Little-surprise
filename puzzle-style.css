@@ -199,8 +199,8 @@ body {
 
 .puzzle-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 8px;
     background: rgba(255, 255, 255, 0.3);
     padding: 15px;
@@ -210,9 +210,9 @@ body {
 }
 
 .puzzle-piece {
-    width: 100px;
-    height: 100px;
-    background-size: 400px 400px;
+    width: 120px;
+    height: 120px;
+    background-size: 300% 300%;
     border-radius: 12px;
     cursor: grab;
     transition: all 0.3s ease;
@@ -351,9 +351,9 @@ body {
     }
     
     .puzzle-piece {
-        width: 80px;
-        height: 80px;
-        background-size: 320px 320px;
+        width: 100px;
+        height: 100px;
+        background-size: 300% 300%;
     }
     
     .puzzle-grid {
@@ -381,9 +381,9 @@ body {
     }
     
     .puzzle-piece {
-        width: 65px;
-        height: 65px;
-        background-size: 260px 260px;
+        width: 85px;
+        height: 85px;
+        background-size: 300% 300%;
         border-radius: 10px;
     }
     
